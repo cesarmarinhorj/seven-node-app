@@ -23,4 +23,7 @@ Route.get('/users', 'UserController.show')
 Route.post('/users', 'UserController.create')
 Route.put('/users', 'UserController.update')
 
+Route.get('/empresas', 'EmpresaController.show')
+Route.post('/empresas', 'EmpresaController.create')
+
 Route.post('/sessions', 'SessionController.create')
