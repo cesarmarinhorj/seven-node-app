@@ -25,6 +25,7 @@ Route.put("/users", "UserController.update");
 
 Route.get("/empresas", "EmpresaController.show");
 Route.post("/empresas", "EmpresaController.create");
+Route.post("/empresas/remover", "EmpresaController.remove");
 
 Route.post("/sessions", "SessionController.create");
 

@@ -20,10 +20,31 @@ class RecuperatorController {
       .innerJoin("auditorias", "auditorias.id", "notas_fiscais.id_auditoria")
       .where("auditorias.id", request.params.id);
 
+    const innerJoinPisApurado = await Database.table("produtos")
+      .sum("pis as pis")
+      .innerJoin("notas_fiscais", "notas_fiscais.id", "produtos.id_nfe")
+      .innerJoin("auditorias", "auditorias.id", "notas_fiscais.id_auditoria")
+      .where({
+        "auditorias.id": request.params.id,
+        "produtos.tributacao": "monofasico",
+      });
+
+    const innerJoinCofinsApurado = await Database.table("produtos")
+      .sum("cofins as cofins")
+      .innerJoin("notas_fiscais", "notas_fiscais.id", "produtos.id_nfe")
+      .innerJoin("auditorias", "auditorias.id", "notas_fiscais.id_auditoria")
+      .where({
+        "auditorias.id": request.params.id,
+        "produtos.tributacao": "monofasico",
+      });
+
     return response.json({
       id: request.params.id,
-      pis: innerJoinPis[0].pis,
-      cofins: innerJoinCofins[0].cofins,
+      pisDeclarado: innerJoinPis[0].pis,
+      cofinsDeclarado: innerJoinCofins[0].cofins,
+      pisApurado: innerJoinPisApurado[0].pis,
+      cofinsApurado: innerJoinCofinsApurado[0].cofins,
+      total: innerJoinPisApurado[0].pis + innerJoinCofinsApurado[0].cofins,
     });
   }
 
