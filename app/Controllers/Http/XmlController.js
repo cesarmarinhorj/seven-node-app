@@ -9,10 +9,12 @@ const ApiConsult = use("App/Controllers/Http/ApiConsult");
 
 class XmlController {
   async upload({ request }) {
-    console.log(request);
+    
+    console.log("passando aqui")
     const profilePics = request.file("uploadXml", {
       types: ["xml"],
     });
+
 
     await profilePics.moveAll(Helpers.tmpPath("uploads"), (file) => {
       return {
@@ -21,6 +23,7 @@ class XmlController {
     });
 
     if (!profilePics.movedAll()) {
+      console.log("DEU ERRO")
       return profilePics.errors();
     }
 

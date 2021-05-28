@@ -76,6 +76,19 @@ class RecuperatorController {
       .where("id", request.body.id)
       .update({ tributacao: request.body.tributacao, ncm: request.body.ncm });
   }
+
+  async listAll({ request, auth }) {
+     const user = await auth.getUser();
+
+    const listAll = await Database.table("auditorias")
+      .select('auditorias.id', 'auditorias.created_at')
+      .innerJoin("empresas", "empresas.id", "auditorias.id_empresa")
+      .where({
+        "empresas.user_id": user.id,
+      });
+
+    return listAll
+  }
 }
 
 module.exports = RecuperatorController;

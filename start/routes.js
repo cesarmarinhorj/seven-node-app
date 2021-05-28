@@ -33,5 +33,6 @@ Route.get("/recuperator/products/:id", "Recuperator.list");
 Route.get("/recuperator/:id", "Recuperator.show");
 Route.post("/recuperator", "Recuperator.create");
 Route.put("/recuperator/products", "Recuperator.update");
+Route.get("/recuperator/list/all", "Recuperator.listAll");
 
 Route.post("/recuperator/upload", "XmlController.upload");
